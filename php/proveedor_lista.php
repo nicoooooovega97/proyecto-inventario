@@ -2,7 +2,6 @@
 $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
 $tabla = "";
 $proveedor_id = (isset($_GET['proveedor_id'])) ? $_GET['proveedor_id'] : 0;
-$url = "index.php?vista=supplier_list&proveedor_id=" . $proveedor_id . "&page="; 
 
 if (isset($busqueda) && $busqueda != "") {
     $consulta_datos = "SELECT * FROM proveedor WHERE proveedor_nombre LIKE '%$busqueda%' OR proveedor_telefono LIKE '%$busqueda%' OR proveedor_correo LIKE '%$busqueda%' OR proveedor_direccion LIKE '%$busqueda%' OR proveedor_fecha LIKE '%$busqueda%' ORDER BY proveedor_nombre ASC LIMIT $inicio,$registros";
@@ -53,7 +52,7 @@ if ($total >= 1 && $pagina <= $Npaginas) {
                 <td>' . $rows['proveedor_direccion'] . '</td>
                 <td>' . $rows['proveedor_fecha'] . '</td>
                 <td>
-                    <a href="index.php?vista=proveedor_update&proveedor_id_up=' . $rows['proveedor_id'] . '" class="button is-success is-rounded is-small">Actualizar</a>
+                    <a href="index.php?vista=supplier_update&supplier_id_up=' . $rows['proveedor_id'] . '" class="button is-success is-rounded is-small">Actualizar</a>
                 </td>
                 <td>
                     <a href="' . $url . $pagina . '&supplier_id_del=' . $rows['proveedor_id'] . '" class="button is-danger is-rounded is-small">Eliminar</a>
