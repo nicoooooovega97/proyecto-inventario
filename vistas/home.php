@@ -1,6 +1,6 @@
 <div class="container is-fluid">
     <h1 class="title">¡Bienvenido <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?>!</h1>
-    <h2 class="subtitle">inventario cafe energia </h2>
+    <h2 class="subtitle">Inventario Cafe Energia </h2>
 </div>
 <div class="container is-flex">
     <img src="img/bienvenida.jpg" alt="Descripción de la imagen" class="is-fullwidth">

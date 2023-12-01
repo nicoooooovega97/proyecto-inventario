@@ -12,21 +12,32 @@
             require_once "./php/producto_eliminar.php";
         }
 
-        if(!isset($_GET['page'])){
-            $pagina=1;
-        }else{
-            $pagina=(int) $_GET['page'];
-            if($pagina<=1){
-                $pagina=1;
-            }
+        $pagina = (isset($_GET['page']) && $_GET['page'] > 1) ? (int)$_GET['page'] : 1;
+
+        # Entrada producto #
+        if(isset($_GET['product_id_entrada'])){
+            header("Location: index.php?vista=product_entrada&product_id_entrada=".$_GET['product_id_entrada']);
+            exit; // Asegura que el script se detenga después de la redirección
+        }
+        
+
+        # Salida producto #
+        if(isset($_GET['product_id_salida'])){
+            header("Location: index.php?vista=product_salida&product_id_salida=".$_GET['product_id_salida']);
+            exit; // Asegura que el script se detenga después de la redirección
         }
 
         $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;
+        $producto_id_entrada = (isset($_GET['product_id_entrada'])) ? $_GET['product_id_entrada'] : 0;
+        $producto_id_salida = (isset($_GET['product_id_salida'])) ? $_GET['product_id_salida'] : 0;
 
-        $pagina=limpiar_cadena($pagina);
-        $url="index.php?vista=product_list&page="; /* <== */
-        $registros=15;
-        $busqueda="";
+        $pagina = limpiar_cadena($pagina);
+        $url = "index.php?vista=product_list&page=";
+        $url_entrada = "index.php?vista=product_entrada&product_id_entrada=$producto_id_entrada&page=";
+        $url_salida = "index.php?vista=product_salida&product_id_salida=$producto_id_salida&page=";
+
+        $registros = 15;
+        $busqueda = "";
 
         # Paginador producto #
         require_once "./php/producto_lista.php";

@@ -27,7 +27,8 @@
         <div class="column">
             <?php
                 $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;
-
+                
+               
                 /*== Verificando categoria ==*/
                 $check_categoria=conexion();
                 $check_categoria=$check_categoria->query("SELECT * FROM categoria WHERE categoria_id='$categoria_id'");
@@ -39,11 +40,12 @@
                     echo '
                         <h2 class="title has-text-centered">'.$check_categoria['categoria_nombre'].'</h2>
                     ';
-
+                    
                     require_once "./php/main.php";
 
                     # Eliminar producto #
                     if(isset($_GET['product_id_del'])){
+                        
                         require_once "./php/producto_eliminar.php";
                     }
 
@@ -55,9 +57,11 @@
                             $pagina=1;
                         }
                     }
-
+                    
+                    
                     $pagina=limpiar_cadena($pagina);
                     $url="index.php?vista=product_category&category_id=$categoria_id&page="; /* <== */
+                    
                     $registros=15;
                     $busqueda="";
 

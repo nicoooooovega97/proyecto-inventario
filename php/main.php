@@ -110,3 +110,9 @@
 		$tabla.='</nav>';
 		return $tabla;
 	}
+	function calcularNuevoStock($stock, $stock_nuevo) {
+		return $stock + $stock_nuevo;}
+	function calcularStockSalida($stock, $stock_nuevo) {
+			return $stock - $stock_nuevo;}
+			
+		
