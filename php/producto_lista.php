@@ -110,6 +110,13 @@ if ($total >= 1 && $pagina <= $Npaginas) {
                 <td>' . $rows['proveedor_nombre'] . '</td>
                 <td>' . $rows['usuario_nombre'] . ' ' . $rows['usuario_apellido'] . '</td>
                 <td>
+                <div class="buttons is-pulled-left">
+                    <a href="' . $url . $pagina . '&product_id_entrada=' . $rows['producto_id'] . '" class="button is-link is-rounded is-small">Entrada</a>
+                </div>
+                <div class="buttons is-pulled-left">
+                    <a href="' . $url . $pagina . '&product_id_salida=' . $rows['producto_id'] . '" class="button is-warning is-rounded is-small">Salida</a>
+                </div>
+
                     <div class="buttons is-right">
                         <a href="index.php?vista=product_update&product_id_up='.$rows['producto_id'].'" class="button is-success is-rounded is-small">Actualizar</a>
                         <a href="'.$url.$pagina.'&product_id_del='.$rows['producto_id'].'" class="button is-danger is-rounded is-small">Eliminar</a>

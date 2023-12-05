@@ -56,13 +56,14 @@ CREATE TABLE `producto` (
   `producto_id` int(20) NOT NULL,
   `producto_codigo` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_nombre` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
-  `producto_precio` decimal(30,2) NOT NULL,
+  `producto_precio` int(30,2) NOT NULL,
   `producto_stock` int(25) NOT NULL,
   `producto_marca` varchar(7) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_foto` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_id` int(7) NOT NULL,
   `proveedor_id` int(7) NOT NULL,
   `usuario_id` int(10) NOT NULL
+  `producto_fecha` date NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -105,6 +106,7 @@ ALTER TABLE `producto`
   ADD KEY `categoria_id` (`categoria_id`),
   ADD KEY `proveedor_id` (`proveedor_id`),
   ADD KEY `usuario_id` (`usuario_id`);
+  ADD KEY `producto_fecha` (`producto_fecha`);
 
 --
 -- Indices de la tabla `usuario`
