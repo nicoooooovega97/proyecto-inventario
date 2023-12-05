@@ -1,4 +1,8 @@
 <?php
+$categoria_id = isset($categoria_id) ? $categoria_id : 0;
+$proveedor_id = isset($proveedor_id) ? $proveedor_id : 0;
+
+
 $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
 $tabla = "";
 
@@ -15,17 +19,31 @@ if (isset($busqueda) && $busqueda != "") {
     $consulta_total = "SELECT COUNT(producto_id) FROM producto 
                       LEFT JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
                       WHERE producto.producto_codigo LIKE '%$busqueda%' OR producto.producto_nombre LIKE '%$busqueda%'";
-} elseif ($categoria_id > 0) {
-    $consulta_datos = "SELECT $campos FROM producto 
-                      INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
-                      INNER JOIN usuario ON producto.usuario_id = usuario.usuario_id 
-                      LEFT JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
-                      WHERE producto.categoria_id='$categoria_id' 
-                      ORDER BY producto.producto_nombre ASC LIMIT $inicio, $registros";
+} elseif ($categoria_id > 0 || $proveedor_id > 0) {
+    if ($categoria_id > 0) {
+        $consulta_datos = "SELECT $campos FROM producto 
+                          INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
+                          INNER JOIN usuario ON producto.usuario_id = usuario.usuario_id 
+                          LEFT JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
+                          WHERE producto.categoria_id='$categoria_id' 
+                          ORDER BY producto.producto_nombre ASC LIMIT $inicio, $registros";
 
-    $consulta_total = "SELECT COUNT(producto_id) FROM producto 
-                      LEFT JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
-                      WHERE categoria_id='$categoria_id'";
+        $consulta_total = "SELECT COUNT(producto_id) FROM producto 
+                          LEFT JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
+                          WHERE categoria_id='$categoria_id'";
+    } elseif ($proveedor_id > 0) {
+        // Consulta para filtrar por proveedor
+        $consulta_datos = "SELECT $campos FROM producto 
+                          INNER JOIN proveedor ON producto.proveedor_id = proveedor.proveedor_id 
+                          INNER JOIN usuario ON producto.usuario_id = usuario.usuario_id 
+                          LEFT JOIN categoria ON producto.categoria_id = categoria.categoria_id 
+                          WHERE producto.proveedor_id='$proveedor_id' 
+                          ORDER BY producto.producto_nombre ASC LIMIT $inicio, $registros";
+
+        $consulta_total = "SELECT COUNT(producto_id) FROM producto 
+                          LEFT JOIN categoria ON producto.categoria_id = categoria.categoria_id 
+                          WHERE proveedor_id='$proveedor_id'";
+    }
 } else {
     $consulta_datos = "SELECT $campos FROM producto 
                       INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
@@ -46,6 +64,15 @@ $total = $conexion->query($consulta_total);
 $total = (int) $total->fetchColumn();
 
 $Npaginas = ceil($total / $registros);
+
+// Agrega dos botones (A y B) antes de la tabla
+echo '
+    <div class="buttons is-pulled-right">    
+        <a href="#" class="button is-success is-rounded is-small">Entrada</a>
+        <a href="#" class="button is-link  is-rounded is-small">Salida</a>
+    </div>
+
+';
 
 if ($total >= 1 && $pagina <= $Npaginas) {
     $contador = $inicio + 1;
@@ -89,11 +116,12 @@ if ($total >= 1 && $pagina <= $Npaginas) {
                 <div class="buttons is-pulled-left">
                     <a href="' . $url . $pagina . '&product_id_salida=' . $rows['producto_id'] . '" class="button is-warning is-rounded is-small">Salida</a>
                 </div>
-                <div class="buttons is-pulled-left">
-                    <a href="' . $url . $pagina . '&product_id_del=' . $rows['producto_id'] . '" class="button is-danger is-rounded is-small">Eliminar</a>
-                </div>
 
-                    
+                    <div class="buttons is-right">
+                        <a href="index.php?vista=product_update&product_id_up='.$rows['producto_id'].'" class="button is-success is-rounded is-small">Actualizar</a>
+                        <a href="'.$url.$pagina.'&product_id_del='.$rows['producto_id'].'" class="button is-danger is-rounded is-small">Eliminar</a>
+                    </div>
+
                 </td>
             </tr>
         ';
@@ -135,3 +163,6 @@ if ($total >= 1 && $pagina <= $Npaginas) {
 
 $conexion = null;
 ?>
+<?php
+// ... (código anterior)
+

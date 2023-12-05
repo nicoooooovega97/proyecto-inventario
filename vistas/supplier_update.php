@@ -9,7 +9,7 @@
 
         require_once "./php/main.php";
 
-        $id = (isset($_GET['proveedor_id_up'])) ? $_GET['proveedor_id_up'] : 0;
+        $id = (isset($_GET['supplier_id_up'])) ? $_GET['supplier_id_up'] : 0;
         $id = limpiar_cadena($id);
 
         /* Verificando proveedor */

@@ -1,22 +1,19 @@
 <?php
-    /*== Almacenando datos ==*/
-    $proveedor_id_del = limpiar_cadena($_GET['proveedor_id_del']);
+    $supplier_id_del = limpiar_cadena($_GET['supplier_id_del']);
 
-    /*== Verificando proveedor ==*/
+
     $check_proveedor = conexion();
-    $check_proveedor = $check_proveedor->query("SELECT proveedor_id FROM proveedor WHERE proveedor_id = '$proveedor_id_del'");
+    $check_proveedor = $check_proveedor->query("SELECT proveedor_id FROM proveedor WHERE proveedor_id = '$supplier_id_del'");
 
     if ($check_proveedor->rowCount() == 1) {
-
         $check_productos = conexion();
-        $check_productos = $check_productos->query("SELECT proveedor_id FROM producto WHERE proveedor_id = '$proveedor_id_del' LIMIT 1");
+        $check_productos = $check_productos->query("SELECT proveedor_id FROM producto WHERE proveedor_id = '$supplier_id_del' LIMIT 1");
 
         if ($check_productos->rowCount() <= 0) {
-
             $eliminar_proveedor = conexion();
             $eliminar_proveedor = $eliminar_proveedor->prepare("DELETE FROM proveedor WHERE proveedor_id = :id");
 
-            $eliminar_proveedor->execute([":id" => $proveedor_id_del]);
+            $eliminar_proveedor->execute([":id" => $supplier_id_del]);
 
             if ($eliminar_proveedor->rowCount() == 1) {
                 echo '
@@ -52,3 +49,4 @@
         ';
     }
     $check_proveedor = null;
+

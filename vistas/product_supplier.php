@@ -6,7 +6,7 @@
 <div class="container pb-6 pt-6">
     <?php 
         require_once "./php/main.php";
-     ?>
+    ?>
     
     <div class="columns">
         <div class="column is-one-fifth">
@@ -19,7 +19,7 @@
                     $proveedores = $proveedores->fetchAll();
 
                     foreach($proveedores as $row){
-                        echo '<a href="index.php?vista=product_supplier&supplier_id='.$row['proveedor_id'].'" class="button is-link is-inverted is-fullwidth">'.htmlspecialchars($row['proveedor_nombre']).'</a>';
+                        echo '<a href="index.php?vista=product_supplier&supplier_id='.$row['proveedor_id'].'" class="button is-link is-inverted is-fullwidth">'.$row['proveedor_nombre'].'</a>';
                     }
                 } else {
                     echo '<p class="has-text-centered">No hay proveedores registrados</p>';
@@ -30,7 +30,9 @@
 
         <div class="column">
             <?php
-                $proveedor_id = (isset($_GET['proveedor_id'])) ? $_GET['proveedor_id'] : 0;
+                $proveedor_id = (isset($_GET['supplier_id'])) ? $_GET['supplier_id'] : 0;
+
+                $check_proveedor=conexion();
                 $check_proveedor = conexion()->query("SELECT * FROM proveedor WHERE proveedor_id='$proveedor_id'");
 
                 if($check_proveedor->rowCount() > 0){
