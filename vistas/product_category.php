@@ -5,6 +5,7 @@
 
 <div class="container pb-6 pt-6">
     <?php
+    ob_start(); // Start output buffering
         require_once "./php/main.php";
     ?>
     <div class="columns">
@@ -43,25 +44,62 @@
                     
                     require_once "./php/main.php";
 
-                    # Eliminar producto #
-                    if(isset($_GET['product_id_del'])){
-                        
-                        require_once "./php/producto_eliminar.php";
-                    }
+                   # Establecer valor de $pagina #
+if (!isset($_GET['page']) || (int)$_GET['page'] <= 1) {
+    $pagina = 1;
+} else {
+    $pagina = (int)$_GET['page'];
+}
+ # Elimina producto #
+if(isset($_GET['product_id_del'])){
+    require_once "./php/producto_eliminar.php";
+}
 
-                    if(!isset($_GET['page'])){
-                        $pagina=1;
-                    }else{
-                        $pagina=(int) $_GET['page'];
-                        if($pagina<=1){
-                            $pagina=1;
-                        }
-                    }
-                    
-                    
+if(!isset($_GET['page'])){
+    $pagina=1;
+} else {
+    $pagina=(int) $_GET['page'];
+    if($pagina<=1){
+        $pagina=1;
+    }
+}
+
+# Entrada producto #
+if(isset($_GET['product_id_entrada'])){
+    require_once "product_entrada.php";
+}
+
+if(!isset($_GET['page'])){
+    $pagina=1;
+} else {
+    $pagina=(int) $_GET['page'];
+    if($pagina<=1){
+        $pagina=1;
+    }
+}
+
+
+            # Salida producto #
+            if(isset($_GET['product_id_salida'])){
+                require_once "product_salida.php";
+            }
+            
+            if(!isset($_GET['page'])){
+                $pagina=1;
+            } else {
+                $pagina=(int) $_GET['page'];
+                if($pagina<=1){
+                    $pagina=1;
+                }
+            }
+           
+                     $producto_id_entrada = (isset($_GET['product_id_entrada'])) ? $_GET['product_id_entrada'] : 0;
+                     $producto_id_salida = (isset($_GET['product_id_salida'])) ? $_GET['product_id_salida'] : 0;
+             
                     $pagina=limpiar_cadena($pagina);
                     $url="index.php?vista=product_category&category_id=$categoria_id&page="; /* <== */
-                    
+                    $url_entrada = "index.php?vista=product_entrada&product_id_entrada=$producto_id_entrada&page=";
+                    $url_salida = "index.php?vista=product_salida&product_id_salida=$producto_id_salida&page=";
                     $registros=15;
                     $busqueda="";
 

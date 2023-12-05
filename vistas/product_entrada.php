@@ -8,7 +8,7 @@
 		include "./inc/btn_back.php";
 
 		require_once "./php/main.php";
-
+		
 		$id = (isset($_GET['product_id_entrada'])) ? $_GET['product_id_entrada'] : 0;
 		$id=limpiar_cadena($id);
 
@@ -63,6 +63,14 @@
         <input class="input" type="text" name="stock_nuevo" pattern="[0-9]{1,25}" maxlength="25" required value="<?php echo $nuevo_stock; ?>" >
     </div>
 </div>
+<div class="columns">
+            <div class="column">
+                <div class="control">
+                    <label>Fecha</label>
+                    <input class="input" type="date" name="producto_fecha" required>
+                </div>
+            </div>
+        </div>
 		  	
 			
 		</div>
@@ -113,7 +121,35 @@
 				</div>
 		  	</div>
 		</div>
+		<div class="select is-rounded">
+    <select name="producto_usuario">
+        <?php
+        $currentUserID = $_SESSION['id']; // Assuming 'usuario_id' is the correct session variable holding the user ID
 
+        $conexion = conexion();
+        $usuarios = $conexion->query("SELECT * FROM usuario WHERE usuario_id = $currentUserID");
+
+        if ($usuarios->rowCount() > 0) {
+            $usuarios = $usuarios->fetchAll();
+
+            foreach ($usuarios as $row) {
+                $selected = ($currentUserID == $row['usuario_id']) ? 'selected="selected"' : '';
+
+                echo '<option value="' . $row['usuario_id'] . '" ' . $selected . ' >';
+                echo $row['usuario_nombre'];
+
+                if ($currentUserID == $row['usuario_id']) {
+                    echo ' (Actual)';
+                }
+
+                echo '</option>';
+            }
+        }
+
+        $conexion = null;
+        ?>
+    </select>
+</div>
 
 		<p class="has-text-centered">
 			<button type="submit" class="button is-success is-rounded">Actualizar</button>
