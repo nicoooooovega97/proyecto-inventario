@@ -65,14 +65,7 @@ $total = (int) $total->fetchColumn();
 
 $Npaginas = ceil($total / $registros);
 
-// Agrega dos botones (A y B) antes de la tabla
-echo '
-    <div class="buttons is-pulled-right">    
-        <a href="#" class="button is-success is-rounded is-small">Entrada</a>
-        <a href="#" class="button is-link  is-rounded is-small">Salida</a>
-    </div>
 
-';
 
 if ($total >= 1 && $pagina <= $Npaginas) {
     $contador = $inicio + 1;
@@ -118,7 +111,6 @@ if ($total >= 1 && $pagina <= $Npaginas) {
                 </div>
 
                     <div class="buttons is-right">
-                        <a href="index.php?vista=product_update&product_id_up='.$rows['producto_id'].'" class="button is-success is-rounded is-small">Actualizar</a>
                         <a href="'.$url.$pagina.'&product_id_del='.$rows['producto_id'].'" class="button is-danger is-rounded is-small">Eliminar</a>
                     </div>
 

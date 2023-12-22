@@ -2,7 +2,7 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
+-- Servidor: cafeenergia.cl
 -- Tiempo de generación: 26-02-2022 a las 00:05:46
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.10

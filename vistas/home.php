@@ -17,10 +17,10 @@
 </div>
 <?php 
 // Conexión a la base de datos (ajusta los detalles según tu configuración)
-$servername = "localhost";
+$servername = "https://cafeenergia.cl/";
 $username = "root";
 $password = "";
-$dbname = "inventario";
+$dbname = "cca97369_inventario";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
